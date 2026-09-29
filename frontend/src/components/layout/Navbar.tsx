@@ -2,7 +2,6 @@ import { Menu, X } from 'lucide-react'
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, type Variants } from 'motion/react'
 import {
   useCallback,
-  useEffect,
   useRef,
   useState,
   type CSSProperties,
@@ -11,7 +10,7 @@ import {
 } from 'react'
 import { useAppReady } from '../../context/AppReady'
 import { sections, site, footer } from '../../data/content'
-import { useCanHover, useMediaQuery } from '../../hooks/useMediaQuery'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { useScrollSpy } from '../../hooks/useScrollSpy'
 import { DUR, NAV_SPRING, tween } from '../../lib/motion'
 import { scrollToSection } from '../../lib/scrollTo'
@@ -27,7 +26,6 @@ const SPY_IDS: readonly string[] = ['top', ...sections.map((s) => s.id)]
 // Two thresholds so the height transition does not restart while a trackpad hovers around one value.
 const COMPACT_AFTER = 24
 const COMPACT_RELEASE = 8
-const LEAVE_DELAY = 240
 // Set in px through `style` because motion only scale-corrects numeric radii during a layout animation.
 const PILL_RADIUS = 18
 // An inset shadow instead of a border, which would thicken while the pill stretches.
@@ -64,8 +62,6 @@ export function Navbar() {
   const ready = useAppReady()
   const active = useScrollSpy(SPY_IDS)
   const isWide = useMediaQuery('(min-width: 900px)')
-  const canHover = useCanHover()
-
   const { scrollY, scrollYProgress } = useScroll()
   const sprung = useSpring(scrollYProgress, PROGRESS_SPRING)
   const progress = reduced ? scrollYProgress : sprung
@@ -104,31 +100,9 @@ export function Navbar() {
     if (!e.currentTarget.contains(e.relatedTarget)) setFocusInside(false)
   }
 
-  // Hover is ignored on touch: a tap fires mouseenter but never mouseleave, which would pin the pill.
-  const [hot, setHot] = useState<string | null>(null)
+  // The pill follows section state and keyboard focus, not pointer movement.
   const [focused, setFocused] = useState<string | null>(null)
-  const leaveTimer = useRef<number | null>(null)
-  const clearLeave = () => {
-    if (leaveTimer.current !== null) {
-      window.clearTimeout(leaveTimer.current)
-      leaveTimer.current = null
-    }
-  }
-  const onEnter = (id: string) => {
-    if (!canHover) return
-    clearLeave()
-    setHot(id)
-  }
-  const onListLeave = () => {
-    if (!canHover) return
-    clearLeave()
-    leaveTimer.current = window.setTimeout(() => {
-      leaveTimer.current = null
-      setHot(null)
-    }, LEAVE_DELAY)
-  }
-  useEffect(() => clearLeave, [])
-  const pillId = hot ?? focused ?? (active !== 'top' ? active : null)
+  const pillId = focused ?? (active !== 'top' ? active : null)
 
   const [open, setOpen] = useState(false)
   const [scrollbar, setScrollbar] = useState(0)
@@ -180,11 +154,11 @@ export function Navbar() {
           </a>
 
           <nav aria-label={footer.sectionsLabel} className="nav__links">
-            <ul className="nav__list" onMouseLeave={onListLeave}>
+            <ul className="nav__list">
               {sections.map((s) => {
                 const isActive = active === s.id
                 return (
-                  <li key={s.id} className="nav__item" onMouseEnter={() => onEnter(s.id)}>
+                  <li key={s.id} className="nav__item">
                     {pillId === s.id && (
                       <motion.span
                         layoutId="nav-pill"
