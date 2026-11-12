@@ -220,9 +220,9 @@ export function Navbar() {
                 <Button
                   variant="primary"
                   size="sm"
-                  href="#join"
+                  href="https://gsx-cert.vercel.app/"
                   className="nav__cta"
-                  onClick={(e) => goTo(e, 'join')}
+                  onClick={(e) => goTo(e, 'certificates')}
                   inert={inertWhileOpen}
                 >
                   {layoutCopy.joinShort}
