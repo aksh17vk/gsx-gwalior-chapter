@@ -1,7 +1,7 @@
 import { X } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion, type Variants } from 'motion/react'
 import { useEffect, useRef, type CSSProperties, type MouseEvent } from 'react'
-import { footer, hero, join, sections, site } from '../../data/content'
+import { footer, hero, sections, site } from '../../data/content'
 import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
 import { useEventState } from '../../hooks/useEventState'
 import { useFocusTrap } from '../../hooks/useFocusTrap'
