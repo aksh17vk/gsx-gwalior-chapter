@@ -169,8 +169,8 @@ export function MobileMenu({ open, onClose, activeId, compact = false, scrollbar
                   </nav>
 
                   <motion.div className="sheet__row sheet__row--join" variants={fade} custom={ROWS_AT}>
-                    <Button variant="primary" full href="#join" className="sheet__join" onClick={(e) => go(e, 'join')}>
-                      {join.stub.ctaGroup}
+                    <Button variant="primary" full external href="https://gsx-cert.vercel.app/" className="sheet__join">
+                      Certificate
                     </Button>
                   </motion.div>
 
