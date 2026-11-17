@@ -1,6 +1,6 @@
 /** Site copy, links and event dates. */
 
-export type SectionId = 'top' | 'about' | 'whatwedo' | 'events' | 'join'
+export type SectionId = 'top' | 'about' | 'whatwedo' | 'events' | 'gallery' | 'join'
 
 export type SectionMeta = {
   id: SectionId
@@ -17,7 +17,8 @@ export const sections: readonly SectionMeta[] = [
   { id: 'about', index: '01', label: 'About', ruleLabel: 'Who we are' },
   { id: 'whatwedo', index: '02', label: 'What we do', ruleLabel: 'What we do' },
   { id: 'events', index: '03', label: 'Events', ruleLabel: 'Events' },
-  { id: 'join', index: '04', label: 'Join', ruleLabel: 'Join' },
+  { id: 'gallery', index: '04', label: 'Gallery', ruleLabel: 'Gallery' },
+  { id: 'join', index: '05', label: 'Join', ruleLabel: 'Join' },
 ] as const
 
 export const sectionTotal = String(sections.length).padStart(2, '0')
@@ -224,6 +225,26 @@ export const eventsCopy = {
   qrRegister: 'Scan to register',
   qrRecap: 'Scan for the recap',
   moreEvents: 'More events are announced on Instagram first',
+} as const
+
+export const gallery = {
+  label: 'Gallery',
+  title: 'GSX COMMIT 1.0 GLIMPSES',
+  lead: 'A look back at the moments, people, and ideas that brought our first chapter event to life.',
+  photos: [
+    { src: '/gallery/commit-1/01.jpeg', alt: 'Opening ceremony' },
+    { src: '/gallery/commit-1/02.jpeg', alt: 'Guest facilitation (Dr. Mir Shahnawaz Ahmad)' },
+    { src: '/gallery/commit-1/03.jpeg', alt: 'Guest facilitation (Dr. Arun Kumar)' },
+    { src: '/gallery/commit-1/04.jpeg', alt: 'Guest facilitation (Dr. Vibha Tiwari)' },
+    { src: '/gallery/commit-1/05.jpeg', alt: 'Guest facilitation (Dr. Neelam Arya)' },
+    { src: '/gallery/commit-1/06.jpeg', alt: 'Core team announcement' },
+    { src: '/gallery/commit-1/07.jpeg', alt: 'Ganesh vandana' },
+    { src: '/gallery/commit-1/08.jpeg', alt: 'What is GSX?' },
+    { src: '/gallery/commit-1/09.jpeg', alt: 'AI Agents & Agentic AI Workshop' },
+    { src: '/gallery/commit-1/10.jpeg', alt: 'Git & GitHub Workshop' },
+    { src: '/gallery/commit-1/11.jpeg', alt: 'Jamming session' },
+    { src: '/gallery/commit-1/12.jpeg', alt: 'Team GSX-GWL' },
+  ],
 } as const
 
 export const join = {
